@@ -1,8 +1,11 @@
 const express = require("express");
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const uuid = require("uuid");
 
 const app = express();
 app.use(morgan("common"));
+app.use(bodyParser.json());
 
 let movies = [
   {
@@ -24,11 +27,62 @@ app.get("/", (req, res) => {
   res.send("Welcome to myFlix App!");
 });
 
-app.use("/documentation", express.static("public"));
-
+//get a list of all movies
 app.get("/movies", (req, res) => {
-  res.json(movies);
+  res.send("Successful GET request returning all the movies");
 });
+
+//returning data on all the movies
+app.get("/movies/:[title]", (req, res) => {
+  res.send("Successful GET request returning data on all the movies");
+});
+
+//returning genre of a movie
+app.get("/movies/:title/:genre", (req, res) => {
+  res.send("Successful GET request returning genre of a movie");
+});
+
+//get info about director
+app.get("/movies/:title/:director", (req, res) => {
+  res.send("Successful GET request returning data on director of the movie");
+});
+
+//add a user
+app.post("/users", (req, res) => {
+  res.send(
+    "Successful post request returning a message that a user has been added"
+  );
+});
+
+//update a user
+app.put("/users", (req, res) => {
+  res.send(
+    "Successful put request returning a message that a user has been updated"
+  );
+});
+
+//add a movie to favourites
+app.post("/users/:FavouriteMovies", (req, res) => {
+  res.send(
+    "Successful post request returning a message that a movie has been added to favourites"
+  );
+});
+
+//delete a movie from favourites
+app.delete("/users/:FavouriteMovies", (req, res) => {
+  res.send(
+    "Successful request returning a message that a movie has been deleted from favourites"
+  );
+});
+
+//delete a user
+app.delete("/users", (req, res) => {
+  res.send(
+    "Successful post request returning a message that a user has been deleted"
+  );
+});
+
+app.use("/documentation", express.static("public"));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
