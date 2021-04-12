@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 10px;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>movie-api</title>
+  <link href="styles/styles.css" rel="stylesheet" type="text">
+</head>
+
+<body>
+  <h1>Movie Mania</h1>
+  <p>To build the server­side component of a “movies” web application. The web application will
+    provide users with access to information about different movies, directors, and genres. Users
+    will be able to sign up, update their personal information, and create a list of their favorite
+    movies.</p>
+  <table style="width:100%">
+    <tr>
+      <th>Business Logic</th>
+      <th>URL</th>
+      <th>HTTP Method</th>
+      <th>Request body data format</th>
+      <th>Rsponse body data format</th>
+    </tr>
+    <tr>
+      <td>Return a list of all movies to the user</td>
+      <td>/movies</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>A JSON object holding data about all the movies. eg. <br>
+        <b>Description</b>:
+        "Twilight is a 2008 American romantic fantasy film based on Stephenie Meyer's 2005 novel of the same name.
+        Directed by
+        Catherine Hardwicke, the film stars Kristen Stewart and Robert Pattinson. It is the first film in The Twilight
+        Saga film
+        series. This film focuses on the development of the relationship between Bella Swan (a teenage girl) and Edward
+        Cullen
+        (a vampire), and the subsequent efforts of Edward and his family to keep Bella safe from a coven of evil
+        vampires.",
+        <br>
+        <b>Name</b>: "Twilight", <br>
+        <b>Genre</b>:
+        {Name: "Romantic Fantasy Film", <br>
+        Description: "Romance films or romance movies are romantic love stories recorded in visual media for broadcast
+        in theaters and on TV
+        that focus on passion, emotion, and the affectionate romantic involvement of the main characters and the journey
+        that
+        their love takes them through dating, courtship or marriage."
+        <b>Director</b>:
+        {Name: "Helen Catherine Hardwicke",<br>
+        Bio: "Helen Catherine Hardwicke is an American film director, producer and actor. Howard first came to
+        prominence
+        as a child actor, guest-starring in several television series, including an episode of The Twilight Zone." <br>
+        Born: "March 1, 1954 (age 66 years), Duncan, Oklahoma, United States" <br>
+        <b>Image_link</b>:
+        "https://en.wikipedia.org/wiki/Twilight_(2008_film)#/media/File:Twilight_(2008_film)_poster.jpg",<br>
+        <b>Featured</b>: True <br>
+        }
+      </td>
+    </tr>
+    <tr>
+      <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by
+        title to the
+        user</td>
+      <td>/movies/[title]</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>A JSON object holding data about all the movies. eg. <br>
+        <b>Description</b>:
+        "Twilight is a 2008 American romantic fantasy film based on Stephenie Meyer's 2005 novel of the same name.
+        Directed by
+        Catherine Hardwicke, the film stars Kristen Stewart and Robert Pattinson. It is the first film in The Twilight
+        Saga film
+        series. This film focuses on the development of the relationship between Bella Swan (a teenage girl) and Edward
+        Cullen
+        (a vampire), and the subsequent efforts of Edward and his family to keep Bella safe from a coven of evil
+        vampires.",
+        <br>
+        <b>Name</b>: "Twilight", <br>
+        <b>Genre</b>:
+        {Name: "Romantic Fantasy Film", <br>
+        Description: "Romance films or romance movies are romantic love stories recorded in visual media for broadcast
+        in
+        theaters and on TV
+        that focus on passion, emotion, and the affectionate romantic involvement of the main characters and the journey
+        that
+        their love takes them through dating, courtship or marriage."
+        <b>Director</b>:
+        {Name: "Helen Catherine Hardwicke",<br>
+        Bio: "Helen Catherine Hardwicke is an American film director, producer and actor. Howard first came to
+        prominence
+        as a child actor, guest-starring in several television series, including an episode of The Twilight Zone." <br>
+        Born: "March 1, 1954 (age 66 years), Duncan, Oklahoma, United States" <br>
+        <b>Image_link</b>:
+        "https://en.wikipedia.org/wiki/Twilight_(2008_film)#/media/File:Twilight_(2008_film)_poster.jpg",<br>
+        <b>Featured</b>: True <br>
+        }
+      </td>
+    </tr>
+    <tr>
+      <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
+      <td>/movies/[title]/genre</td>
+      <td>GET</td>
+      <td>None</td>
+      <td><b>Genre</b>:
+        {Name: "Romantic Fantasy Film", <br>
+        Description: "Romance films or romance movies are romantic love stories recorded in visual media for broadcast
+        in
+        theaters and on TV
+        that focus on passion, emotion, and the affectionate romantic involvement of the main characters and the journey
+        that
+        their love takes them through dating, courtship or marriage."</td>
+    </tr>
+    <tr>
+      <td>Return data about a director (bio, birth year, death year) by name</td>
+      <td>directors/[name]</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>A text indicating description about the director in a JSON format. <br>
+        eg. <b>"Director"</b>: { <br>
+        <b>"Name"</b>: "Ron Howard", <br>
+        <b>"Bio"</b> : "Ronald William Howard is an American film director, producer and actor. Howard first came to
+        prominence
+        as a child actor, guest-starring in several television series, including an episode of The Twilight Zone.", <br>
+        <b>"Born"</b>: "March 1, 1954 (age 66 years), Duncan, Oklahoma, United States"
+      </td>
+    </tr>
+    <tr>
+      <td>Allow new users to register</td>
+      <td>/users</td>
+      <td>POST</td>
+      <td>A JSON object holding
+        data about the user to
+        add, structured like: <br>
+        {
+        <b>Name</b> : "Paulina Gomez",<br>
+        <b>Username</b> : "gomezpaulina09", <br>
+        <b>Password</b> : "#"
+        <b>Email</b>: "Paulinagomez222@gmail.com", <br>
+        <b>FavMovies</b>: []<br>
+        <b>Birthday</b>: 09/12/1896
+        }
+      </td>
+      <td>{
+        <b>Name</b> : "Paulina Gomez",<br>
+        <b>Username</b> : "gomezpaulina09", <br>
+        <b>Password</b> : "#"
+        <b>Email</b>: "Paulinagomez222@gmail.com", <br>
+        <b>FavMovies</b>: []<br>
+        <b>Birthday</b>: 09/12/1896
+        }
+      </td>
+    </tr>
+    <tr>
+      <td>Allow users to update their user info using username</td>
+      <td>/users</td>
+      <td>PUT</td>
+      <td>A JSON object holding
+        data about the user to
+        add, structured like:
+        {
+        <b>Name</b> : "Paulina Gomez",<br>
+        <b>Username</b> : "gomezpaulina09", <br>
+        <b>Password</b> : "#"
+        <b>Email</b>: "Paulinagomez222@gmail.com", <br>
+        <b>FavMovies</b>: []<br>
+        <b>Birthday</b>: 09/12/1896
+        }
+      </td>
+      <td>{
+        <b>Name</b> : "Paulina Gomez",<br>
+        <b>Username</b> : "gomezpaulina09", <br>
+        <b>Password</b> : "#"
+        <b>Email</b>: "Paulinagomez222@gmail.com", <br>
+        <b>FavMovies</b>: []<br>
+        <b>Birthday</b>: 09/12/1896
+        }
+      </td>
+    </tr>
+    <tr>
+      <td>Allow users to add a movie to their list of favorites (showing only a text that a movie has been added)</td>
+      <td>/users/lists</td>
+      <td>POST</td>
+      <td></td>
+      <td>{
+        <b>Name</b> : "Paulina Gomez",<br>
+        <b>Username</b> : "gomezpaulina09", <br>
+        <b>Password</b> : "#"
+        <b>Email</b>: "Paulinagomez222@gmail.com", <br>
+        <b>FavMovies</b>: [114,112]<br>
+        <b>Birthday</b>: 09/12/1896
+        }
+      </td>
+    </tr>
+    <tr>
+      <td>Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed)
+      </td>
+      <td>/users/lists</td>
+      <td>PUT</td>
+      <td>none</td>
+      <td><b>Name</b> : "Paulina Gomez",<br>
+        <b>Username</b> : "gomezpaulina09", <br>
+        <b>Password</b> : "#"
+        <b>Email</b>: "Paulinagomez222@gmail.com", <br>
+        <b>FavMovies</b>: [114,112]<br>
+        <b>Birthday</b>: 09/12/1896
+        }
+      </td>
+    </tr>
+    <tr>
+      <td>Allow existing users to delete their account (showing only a text that a user email has been removed)</td>
+      <td>/users</td>
+      <td>DELETE</td>
+      <td>none</td>
+      <td>
+        <b>Username</b> : [null], <br>
+        <b>Password</b> : [null]
+        <b>Email</b>: [null], <br>
+        <b>FavMovies</b>: [null]<br>
+        <b>Birthday</b>: [null]
+        }
+      </td>
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>
