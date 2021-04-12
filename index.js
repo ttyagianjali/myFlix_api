@@ -1,26 +1,21 @@
+const mongoose = require("mongoose");
+const Models = require("./models.js");
+
+const Movies = Models.Movie;
+const Users = Models.User;
 const express = require("express");
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
 const uuid = require("uuid");
 
 const app = express();
+const bodyParser = require("body-parser");
 app.use(morgan("common"));
 app.use(bodyParser.json());
 
-let movies = [
-  {
-    title: "Harry Potter and the Sorcerer's Stone",
-    author: "J.K. Rowling",
-  },
-  {
-    title: "Lord of the Rings",
-    author: "J.R.R. Tolkien",
-  },
-  {
-    title: "Twilight",
-    author: "Stephanie Meyer",
-  },
-];
+mongoose.connect("mongodb://localhost:27017/movieManiaDb", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // GET requests
 app.get("/", (req, res) => {
@@ -28,8 +23,15 @@ app.get("/", (req, res) => {
 });
 
 //get a list of all movies
-app.get("/movies", (req, res) => {
-  res.send("Successful GET request returning all the movies");
+app.get("/users", (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 //returning data on all the movies
@@ -48,10 +50,39 @@ app.get("/movies/:title/:director", (req, res) => {
 });
 
 //add a user
+/* We’ll expect JSON in this format
+{
+  ID: Integer,
+  Username: String,
+  Password: String,
+  Email: String,
+  Birthday: Date
+}*/
 app.post("/users", (req, res) => {
-  res.send(
-    "Successful post request returning a message that a user has been added"
-  );
+  Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + "already exists");
+      } else {
+        Users.create({
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday,
+        })
+          .then((user) => {
+            res.status(201).json(user);
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send("Error: " + error);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
 //update a user
