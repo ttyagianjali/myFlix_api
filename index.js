@@ -11,6 +11,9 @@ const app = express();
 const bodyParser = require("body-parser");
 app.use(morgan("common"));
 app.use(bodyParser.json());
+let auth = require("./auth")(app);
+const passport = require("passport");
+require("./passport");
 
 mongoose.connect("mongodb://localhost:27017/movieManiaDb", {
   useNewUrlParser: true,
@@ -23,16 +26,20 @@ app.get("/", (req, res) => {
 });
 
 //get a list of all movies
-app.get("/movies", (req, res) => {
-  Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
+app.get(
+  "/movies",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 //get movie information by title
 app.get("/movies/:title", (req, res) => {
