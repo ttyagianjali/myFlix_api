@@ -7,8 +7,6 @@ const Users = Models.User;
 const express = require("express");
 const morgan = require("morgan");
 const uuid = require("uuid");
-const cors = require("cors");
-app.use(cors());
 
 const app = express();
 const bodyParser = require("body-parser");
