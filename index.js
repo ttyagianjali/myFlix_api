@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const Models = require("./models.js");
+// const Models = require("./models.js");
 const { check, validationResult } = require("express-validator");
 
-const Movies = Models.Movie;
-const Users = Models.User;
+// const Movies = Models.Movie;
+// const Users = Models.User;
 const express = require("express");
 const morgan = require("morgan");
 const uuid = require("uuid");
@@ -44,6 +44,10 @@ mongoose.connect("process.env.CONNECTION_URI", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+const Models = require("./models.js");
+const Movies = Models.Movie;
+const Users = Models.User;
 
 // GET requests
 app.get("/", (req, res) => {
