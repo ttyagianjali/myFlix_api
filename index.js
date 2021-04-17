@@ -40,13 +40,10 @@ app.use(
 //   useUnifiedTopology: true,
 // });
 
-mongoose.connect(
-  "mongodb+srv://Curr_ent0:Curr_ent0@cluster0.poeum.mongodb.net/myFlixDb?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect("process.env.CONNECTION_URI", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const Models = require("./models.js");
 const Movies = Models.Movie;
