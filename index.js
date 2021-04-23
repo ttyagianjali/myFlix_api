@@ -16,6 +16,7 @@ let auth = require("./auth")(app);
 const passport = require("passport");
 require("./passport");
 
+const cors = require("cors");
 let allowedOrigins = [
   "http://localhost:8080",
   "http://testsite.com",
@@ -64,7 +65,7 @@ app.get("/", (req, res) => {
 app.get(
   "/movies",
   // passport.authenticate("jwt", { session: false }),
-  function(req, res) {
+  function (req, res) {
     Movies.find()
       .then((movies) => {
         res.status(201).json(movies);
