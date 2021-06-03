@@ -64,7 +64,7 @@ app.get("/", (req, res) => {
 //get a list of all movies
 app.get(
   "/movies",
-  // passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   function (req, res) {
     Movies.find()
       .then((movies) => {
@@ -145,6 +145,7 @@ app.get(
 }*/
 app.post(
   "/users",
+  passport.authenticate("jwt", { session: false }),
   [
     check("Username", "Username is required").isLength({ min: 5 }),
     check(
