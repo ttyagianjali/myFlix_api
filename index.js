@@ -114,12 +114,12 @@ app.get(
   }
 );
 
-// get information oof a user by username
+// get information of a user by username
 app.get(
-  "/users/:Username",
+  "/users/:user_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Users.findOne({ "Username": req.params.Username })
+    Users.findOne({ "user_id": req.params.user_id })
       .then((user) => {
         console.log(user);
         res.status(200).json({
