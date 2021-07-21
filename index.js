@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 // const Models = require("./models.js");
-const { check, validationResult, body } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 
 // const Movies = Models.Movie;
 // const Users = Models.User;
@@ -114,6 +114,29 @@ app.get(
   }
 );
 
+// get information of a user by username
+app.get(
+  "/users/:Username",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Users.findOne({ "Username": req.params.Username })
+      .then((user) => {
+        console.log(user);
+        res.status(200).json({
+          Username: user.Username,
+          Birthday: user.Birthday,
+          Email: user.Email,
+          Password: user.Password,
+          FavoriteMovies: user.FavoriteMovies
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
+
 
 //add a user
 /* We’ll expect JSON in this format
@@ -152,7 +175,6 @@ app.post(
             Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday,
-            FavoriteMovies: FavoriteMovies
           })
             .then((user) => {
               res.status(201).json(user);
@@ -221,25 +243,6 @@ app.put(
         }
       }
     );
-  }
-);
-
-//get user's favorite movies
-app.get(
-  "/users/:Username/FavMovies",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Users.findOne({ Username: req.params.Username })
-      .then((user) => {
-        console.log(user);
-        res.status(200).json({
-          FavoriteMovies: user.FavoriteMovies,
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
   }
 );
 
