@@ -248,7 +248,7 @@ app.put(
 
 //get user's favorite movies
 app.get(
-  "/users/:Username",
+  "/users/:Username/FavMovies",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOne({ Username: req.params.Username })
