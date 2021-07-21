@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 // const Models = require("./models.js");
-const { check, validationResult } = require("express-validator");
+const { check, validationResult, body } = require("express-validator");
 
 // const Movies = Models.Movie;
 // const Users = Models.User;
@@ -175,6 +175,7 @@ app.post(
             Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday,
+            FavoriteMovies: FavoriteMovies
           })
             .then((user) => {
               res.status(201).json(user);
