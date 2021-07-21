@@ -114,29 +114,6 @@ app.get(
   }
 );
 
-// get information of a user by username
-app.get(
-  "/users/:Username",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Users.findOne({ "Username": req.params.Username })
-      .then((user) => {
-        console.log(user);
-        res.status(200).json({
-          Username: user.Username,
-          Birthday: user.Birthday,
-          Email: user.Email,
-          Password: user.Password,
-          FavoriteMovies: user.FavoriteMovies
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
-  }
-);
-
 
 //add a user
 /* We’ll expect JSON in this format
