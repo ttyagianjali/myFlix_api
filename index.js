@@ -12,12 +12,13 @@ const app = express();
 const bodyParser = require("body-parser");
 app.use(morgan("common"));
 app.use(bodyParser.json());
-let auth = require("./auth")(app);
 const passport = require("passport");
 require("./passport");
 
 const cors = require('cors');
 app.use(cors());
+
+let auth = require("./auth")(app);
 
 // mongoose.connect("mongodb://localhost:27017/movieManiaDb", {
 //   useNewUrlParser: true,
