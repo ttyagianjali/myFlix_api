@@ -17,7 +17,14 @@ const passport = require("passport");
 require("./passport");
 
 const cors = require("cors");
-app.use(cors());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 // mongoose.connect("mongodb://localhost:27017/movieManiaDb", {
 //   useNewUrlParser: true,
@@ -119,7 +126,7 @@ app.get(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Users.findOne({ "Username": req.params.Username })
+    Users.findOne({ Username: req.params.Username })
       .then((user) => {
         console.log(user);
         res.status(200).json({
@@ -127,7 +134,7 @@ app.get(
           Birthday: user.Birthday,
           Email: user.Email,
           Password: user.Password,
-          FavoriteMovies: user.FavoriteMovies
+          FavoriteMovies: user.FavoriteMovies,
         });
       })
       .catch((err) => {
@@ -136,7 +143,6 @@ app.get(
       });
   }
 );
-
 
 //add a user
 /* We’ll expect JSON in this format
