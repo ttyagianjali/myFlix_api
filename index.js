@@ -18,6 +18,7 @@ require("./passport");
 const cors = require('cors');
 app.use(cors());
 
+//require auth after allowing origins
 let auth = require("./auth")(app);
 
 // mongoose.connect("mongodb://localhost:27017/movieManiaDb", {
