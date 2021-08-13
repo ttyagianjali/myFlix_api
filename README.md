@@ -5,8 +5,8 @@
 - [Features](#Features)
 - [Technical-Specks](#Technical-Specks)
 - [Link-to-m-Flix-007](#Link-to-m-Flix-007)
-- [Client-side-repository] (#Client-side-repository)
-- [API-Endpoints-Documentation] (#API-Endpoints-Documentation)
+- [Client-side-repository](#Client-side-repository)
+- [API-Endpoints-Documentation](#API-Endpoints-Documentation)
 
 
 ## Objective
